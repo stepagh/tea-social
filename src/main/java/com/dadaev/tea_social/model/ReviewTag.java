@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Embeddable()
+@Embeddable
 public class ReviewTag {
     String teaType;
     String year;

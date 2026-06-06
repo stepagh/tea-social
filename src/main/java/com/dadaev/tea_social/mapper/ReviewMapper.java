@@ -8,6 +8,7 @@ import com.dadaev.tea_social.model.Review;
 import com.dadaev.tea_social.model.ReviewTag;
 
 import org.mapstruct.InheritConfiguration;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,7 +18,7 @@ public interface ReviewMapper {
     @Mapping(target = "teaName", source = "tea.name")
     ReviewPostDTO toDto(Review review);
 
-    @InheritConfiguration(name = "toDto")
+    @InheritInverseConfiguration(name = "toDto")
     Review toEntity(ReviewPostDTO dto);
 
     ReviewTagDTO toReviewTagDto(ReviewTag reviewTag);

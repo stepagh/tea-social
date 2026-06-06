@@ -3,7 +3,6 @@ package com.dadaev.tea_social.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -36,5 +35,4 @@ public class Review {
 
     @ElementCollection
     private List<ReviewTag> tags;
-
 }
