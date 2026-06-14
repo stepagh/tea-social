@@ -1,6 +1,5 @@
 package com.dadaev.tea_social.controller;
 
-import com.dadaev.tea_social.Service.AuthException;
 import com.dadaev.tea_social.Service.AuthService;
 import com.dadaev.tea_social.dto.*;
 import jakarta.validation.Valid;
@@ -19,24 +18,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
-        try {
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
             AuthResponse response = authService.register(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (AuthException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ErrorResponse(e.getMessage()));
-        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
-        try {
             AuthResponse response = authService.login(request);
             return ResponseEntity.ok(response);
-        } catch (AuthException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ErrorResponse(e.getMessage()));
-        }
     }
 }

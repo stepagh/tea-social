@@ -1,7 +1,6 @@
 package com.dadaev.tea_social.dto;
 
-public record ReviewTagDTO(
-    String teaType,
+public record ReviewTagResponse(
     String year,
     String origin
 ) {}

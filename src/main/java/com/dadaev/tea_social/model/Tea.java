@@ -1,5 +1,6 @@
 package com.dadaev.tea_social.model;
 
+import com.dadaev.tea_social.enums.TeaType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +12,9 @@ import lombok.Setter;
 public class Tea {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String name;
-    String year;
     @Column(nullable = false)
-    String origin;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     TeaType type;
 }

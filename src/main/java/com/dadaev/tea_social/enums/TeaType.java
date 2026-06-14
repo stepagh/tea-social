@@ -1,4 +1,4 @@
-package com.dadaev.tea_social.model;
+package com.dadaev.tea_social.enums;
 
 public enum TeaType {
     GREEN_TEA("Зеленый чай"),

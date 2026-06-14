@@ -2,8 +2,8 @@ package com.dadaev.tea_social.dto;
 
 import java.time.LocalDateTime;
 
-public record CommentDTO(
+public record CommentResponse(
     String id,
     String authorName,
     String text,
-    LocalDateTime createdAt) {}
+    LocalDateTime createdAt){}

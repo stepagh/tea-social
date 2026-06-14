@@ -1,13 +1,11 @@
 package com.dadaev.tea_social.dto;
 
-import com.dadaev.tea_social.model.Comment;
-import jakarta.persistence.Embeddable;
-import lombok.Data;
+import com.dadaev.tea_social.enums.TeaType;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record ReviewPostDTO(
+public record ReviewPostResponse(
      String id,
      String reviewText,
      int rating,
@@ -16,7 +14,8 @@ public record ReviewPostDTO(
      AuthorDTO author,
      long teaId,
      String teaName,
-     List<ReviewTagDTO> tags,
-     List<CommentDTO> comments
+     TeaType teaType,
+     ReviewTagResponse tags,
+     List<CommentResponse> comments
 ) {}
 

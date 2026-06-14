@@ -1,15 +1,20 @@
 package com.dadaev.tea_social.mapper;
 
-import com.dadaev.tea_social.dto.CommentDTO;
+import com.dadaev.tea_social.dto.CommentResponse;
+import com.dadaev.tea_social.dto.CreateCommentRequest;
 import com.dadaev.tea_social.model.Comment;
-import org.mapstruct.InheritConfiguration;
-import org.mapstruct.InheritInverseConfiguration;
+import com.dadaev.tea_social.model.Review;
+import com.dadaev.tea_social.model.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
-    CommentDTO toDto(Comment comment);
+    CommentResponse toResponse(Comment comment);
 
-    @InheritInverseConfiguration(name = "toDto")
-    Comment toEntity(CommentDTO dto);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "text", source = "request.text")
+    @Mapping(target = "author", source = "author")
+    @Mapping(target = "review", source = "review")
+    Comment toCommentEntity(CreateCommentRequest request, Review review, User author);
 }

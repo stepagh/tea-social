@@ -2,29 +2,31 @@ package com.dadaev.tea_social.Service;
 
 import com.dadaev.tea_social.Repository.UserRepository;
 import com.dadaev.tea_social.dto.*;
+import com.dadaev.tea_social.exceptions.EmailAlreadyExistsException;
+import com.dadaev.tea_social.exceptions.UsernameAlreadyExistsException;
 import com.dadaev.tea_social.model.User;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final ProfileService profileService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-    }
-
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.username())) {
-            throw new AuthException("Это имя пользователя уже занято");
+            throw new UsernameAlreadyExistsException("This Username is already exists");
         }
         if (userRepository.existsByEmail(request.email())) {
-            throw new AuthException("Этот email уже зарегистрирован");
+            throw new EmailAlreadyExistsException("This email is already taken");
         }
 
         User user = new User();
@@ -32,20 +34,20 @@ public class AuthService {
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
 
-        user = userRepository.save(user);
+        userRepository.saveAndFlush(user);
+        profileService.initializeProfile(user);
 
         String token = jwtService.generateToken(user.getId(), user.getUsername());
         UserDTO userDTO = new UserDTO(user.getId().toString(), user.getUsername(), user.getEmail());
-
         return new AuthResponse(token, userDTO);
     }
 
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.username())
-                .orElseThrow(() -> new AuthException("Неверное имя пользователя или пароль"));
+                .orElseThrow(() -> new BadCredentialsException("Wrong username or password"));
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new AuthException("Неверное имя пользователя или пароль");
+            throw new BadCredentialsException("Wrong username or password");
         }
 
         String token = jwtService.generateToken(user.getId(), user.getUsername());
