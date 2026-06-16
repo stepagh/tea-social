@@ -17,10 +17,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Получаем абсолютный путь к папке uploads
         Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
 
-        // Превращаем путь в понятный для ресурсов формат (file:///C:/... или file:///var/...)
         String fileProtocolPath = uploadPath.toUri().toString();
 
         registry.addResourceHandler("/uploads/**")

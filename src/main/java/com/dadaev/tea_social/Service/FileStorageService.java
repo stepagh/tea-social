@@ -37,27 +37,22 @@ public class FileStorageService {
 
         try {
             String originalFilename = file.getOriginalFilename();
-            // На всякий случай страхуемся от NullPointerException, если имени файла нет
             if (originalFilename == null || originalFilename.isBlank()) {
                 originalFilename = "image.jpg";
             }
 
             String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
 
-            // 1. Формируем путь к файлу
             Path destinationFile = this.rootLocation.resolve(Paths.get(uniqueFilename))
                     .normalize()
-                    .toAbsolutePath(); // Сразу переводим в абсолютный вид
+                    .toAbsolutePath();
 
-            // 2. Получаем АБСОЛЮТНЫЙ путь к нашей корневой папке загрузок
             Path absoluteRootLocation = this.rootLocation.toAbsolutePath().normalize();
 
-            // 3. Надежная проверка: целевой файл ДОЛЖЕН НАЧИНАТЬСЯ с пути нашей папки
             if (!destinationFile.startsWith(absoluteRootLocation)) {
                 throw new PathTraversalException("Attempt to save file outside the target folder");
             }
 
-            // 4. Копируем файл
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
             return baseUrl + uniqueFilename;

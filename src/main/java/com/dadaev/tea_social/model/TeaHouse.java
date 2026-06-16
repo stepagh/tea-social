@@ -20,6 +20,6 @@ public class TeaHouse {
     String address;
     @Column(nullable = false)
     String description;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "teaHouse")
     Set<BookableTea> teas;
 }

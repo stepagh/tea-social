@@ -1,4 +1,4 @@
-package com.dadaev.tea_social.advice;
+package com.dadaev.tea_social.aspect;
 
 import com.dadaev.tea_social.exceptions.*;
 import com.dadaev.tea_social.dto.ErrorResponse;
@@ -13,17 +13,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DirectoryInitializationException.class)
     public ResponseEntity<ErrorResponse> handleDirectoriInitializationException(DirectoryInitializationException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage()));
     }
 
     @ExceptionHandler(SavingFileException.class)
     public ResponseEntity<ErrorResponse> handleSavingFileException(SavingFileException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage()));
     }
 
     @ExceptionHandler(PathTraversalException.class)
     public ResponseEntity<ErrorResponse> handlePathTraversalException(PathTraversalException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 
 
@@ -46,5 +46,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponse(e.getMessage()));
+    }
+    @ExceptionHandler(BookingAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleBookingAlreadyExists(BookingAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
     }
 }
