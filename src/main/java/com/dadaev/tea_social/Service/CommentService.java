@@ -21,7 +21,8 @@ public class CommentService {
 
 
     public CommentResponse createComment(Long postId, CreateCommentRequest request, User currentUser) {
-        Review review = reviewRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post doesn't exist"));
+        Review review = reviewRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post doesn't exist"));
         Comment comment = commentMapper.toCommentEntity(request, review, currentUser);
         commentRepository.save(comment);
         return commentMapper.toResponse(comment);

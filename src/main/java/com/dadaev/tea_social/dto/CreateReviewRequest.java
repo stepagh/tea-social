@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 public record CreateReviewRequest(
-        String teaId,
+        Long teaId,
         String customTeaName,
         TeaType teaType,
         int year,

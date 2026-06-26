@@ -1,11 +1,14 @@
 package com.dadaev.tea_social.Service;
 
+import com.dadaev.tea_social.Repository.BookingRepository;
 import com.dadaev.tea_social.Repository.ProfileRepository;
 import com.dadaev.tea_social.Repository.ReviewRepository;
 import com.dadaev.tea_social.dto.*;
 import com.dadaev.tea_social.exceptions.ResourceNotFoundException;
+import com.dadaev.tea_social.mapper.BookingMapper;
 import com.dadaev.tea_social.mapper.ReviewMapper;
 import com.dadaev.tea_social.mapper.ProfileMapper;
+import com.dadaev.tea_social.model.Booking;
 import com.dadaev.tea_social.model.Review;
 import com.dadaev.tea_social.model.User;
 import com.dadaev.tea_social.model.UserProfile;
@@ -24,8 +27,10 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ReviewMapper reviewMapper;
     private final ReviewRepository reviewRepository;
-
+    private final BookingRepository bookingRepository;
     private final FileStorageService fileStorageService;
+
+    private final BookingMapper bookingMapper;
 
     public ProfileBundleResponse getProfileBundle(User currentUser) {
         UserProfile userProfile = profileRepository.findById(currentUser.getId())
@@ -59,6 +64,11 @@ public class ProfileService {
         return ReviewsPageResponse.from(reviewsSlice);
     }
 
+    public BookingsPageResult getProfileBookings(int offset, int limit, User user) {
+        PageRequest pageRequest = PageRequest.of(offset / limit, limit, Sort.Direction.DESC, "b.date", "b.timeSlot");
+        Slice<BookingDto> bookingSlice = bookingRepository.findBookingsByUserProfile_Id(user.getId(), pageRequest).map(bookingMapper::toBookingDto);
+        return BookingsPageResult.from(bookingSlice);
+    }
     @Transactional
     public void toggleFavoriteReview(Review review, Long userId) {
         UserProfile userProfile = profileRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
@@ -71,6 +81,7 @@ public class ProfileService {
             favoriteReviews.add(review);
         }
     }
+
 
 
     @Transactional

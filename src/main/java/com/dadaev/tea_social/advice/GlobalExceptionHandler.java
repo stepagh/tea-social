@@ -1,4 +1,4 @@
-package com.dadaev.tea_social.aspect;
+package com.dadaev.tea_social.advice;
 
 import com.dadaev.tea_social.exceptions.*;
 import com.dadaev.tea_social.dto.ErrorResponse;

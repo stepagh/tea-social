@@ -19,6 +19,8 @@ public class Booking {
     TeaHouse teaHouse;
     @ManyToOne(fetch = FetchType.LAZY)
     BookableTea tea;
+    @ManyToOne(fetch = FetchType.LAZY)
+    UserProfile userProfile;
     LocalDate date;
     LocalTime timeSlot;
     LocalDateTime confirmedAt;

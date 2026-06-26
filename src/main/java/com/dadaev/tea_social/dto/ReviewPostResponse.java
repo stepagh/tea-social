@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ReviewPostResponse(
-     String id,
+     Long id,
      String reviewText,
      int rating,
      LocalDate createdAt,
      String imageUrl,
-     AuthorDTO author,
+     AuthorDto author,
      long teaId,
      String teaName,
      TeaType teaType,

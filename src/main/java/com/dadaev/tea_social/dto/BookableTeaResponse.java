@@ -5,7 +5,7 @@ import com.dadaev.tea_social.enums.Currency;
 import java.math.BigDecimal;
 
 public record BookableTeaResponse(
-        String id,
+        Long id,
         String teaHouseId,
         String name,
         BigDecimal pricePerSession,

@@ -2,9 +2,11 @@ package com.dadaev.tea_social.controller;
 
 import com.dadaev.tea_social.Service.BookingService;
 import com.dadaev.tea_social.dto.*;
+import com.dadaev.tea_social.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -32,7 +34,7 @@ public class BookingController {
     }
 
     @PostMapping()
-    public ResponseEntity<BookingResponse> postBooking(@RequestBody BookingRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.postBooking(request));
+    public ResponseEntity<BookingResponse> postBooking(@RequestBody BookingRequest request, @AuthenticationPrincipal User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.postBooking(request, user));
     }
 }

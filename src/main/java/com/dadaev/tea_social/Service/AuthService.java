@@ -38,7 +38,7 @@ public class AuthService {
         profileService.initializeProfile(user);
 
         String token = jwtService.generateToken(user.getId(), user.getUsername());
-        UserDTO userDTO = new UserDTO(user.getId().toString(), user.getUsername(), user.getEmail());
+        UserDto userDTO = new UserDto(user.getId(), user.getUsername(), user.getEmail());
         return new AuthResponse(token, userDTO);
     }
 
@@ -51,7 +51,7 @@ public class AuthService {
         }
 
         String token = jwtService.generateToken(user.getId(), user.getUsername());
-        UserDTO userDTO = new UserDTO(user.getId().toString(), user.getUsername(), user.getEmail());
+        UserDto userDTO = new UserDto(user.getId(), user.getUsername(), user.getEmail());
 
         return new AuthResponse(token, userDTO);
     }

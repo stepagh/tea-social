@@ -1,7 +1,7 @@
 package com.dadaev.tea_social.dto;
 
 public record UserProfileResponse(
-    String id,
+    Long id,
     String name,
     String bio,
     String avatarUrl,

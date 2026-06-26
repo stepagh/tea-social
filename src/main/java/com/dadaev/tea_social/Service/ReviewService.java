@@ -55,4 +55,9 @@ public class ReviewService {
         profileService.toggleFavoriteReview(review, user.getId());
         return reviewMapper.toResponse(review);
     }
+
+    public ReviewPostResponse getReview(Long postId) {
+        Review review = reviewRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Review not found"));
+        return reviewMapper.toResponse(review);
+    }
 }

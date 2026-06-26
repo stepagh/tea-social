@@ -3,7 +3,7 @@ package com.dadaev.tea_social.dto;
 import java.time.LocalDateTime;
 
 public record CommentResponse(
-    String id,
+    Long id,
     String authorName,
     String text,
     LocalDateTime createdAt){}

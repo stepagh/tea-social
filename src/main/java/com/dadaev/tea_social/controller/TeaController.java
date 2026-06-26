@@ -1,8 +1,7 @@
 package com.dadaev.tea_social.controller;
 
-import com.dadaev.tea_social.Repository.TeaRepository;
 import com.dadaev.tea_social.Service.TeaService;
-import com.dadaev.tea_social.dto.TeaDTO;
+import com.dadaev.tea_social.dto.TeaDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +19,8 @@ public class TeaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TeaDTO>> getTeas() {
-        List<TeaDTO> teas = teaService.loadTeas();
+    public ResponseEntity<List<TeaDto>> getTeas() {
+        List<TeaDto> teas = teaService.loadTeas();
         return ResponseEntity.ok(teas);
     }
 }

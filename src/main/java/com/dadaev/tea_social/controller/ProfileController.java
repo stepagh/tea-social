@@ -4,6 +4,7 @@ import com.dadaev.tea_social.Service.ProfileService;
 import com.dadaev.tea_social.dto.*;
 import com.dadaev.tea_social.model.User;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,10 @@ public class ProfileController {
     @GetMapping("/favorites")
     public ResponseEntity<ReviewsPageResponse> getFavoritePosts(@RequestParam int offset, @RequestParam int limit, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(profileService.getFavoriteProfilePosts(offset, limit, user));
+    }
+    @GetMapping("/bookings")
+    public ResponseEntity<BookingsPageResult> getProfileBookings(@RequestParam int offset, @RequestParam int limit, @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(profileService.getProfileBookings(offset, limit, user));
     }
 
     @PatchMapping

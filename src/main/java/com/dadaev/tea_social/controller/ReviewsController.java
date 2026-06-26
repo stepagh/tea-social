@@ -24,6 +24,11 @@ public class ReviewsController {
         return ResponseEntity.ok(feedPage);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReviewPostResponse> getReview(@PathVariable Long id) {
+        return ResponseEntity.ok(reviewService.getReview(id));
+    }
+
     @PostMapping
     public ResponseEntity<ReviewPostResponse> postReview(@Valid @ModelAttribute CreateReviewRequest request, @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(reviewService.createReview(request, currentUser));
@@ -33,6 +38,7 @@ public class ReviewsController {
     public ResponseEntity<ReviewPostResponse> toggleFavorite(@PathVariable Long postId, @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(reviewService.toggleFavorite(postId, currentUser));
     }
+
 
 
 }

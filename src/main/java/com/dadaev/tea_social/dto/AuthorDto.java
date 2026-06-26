@@ -1,7 +1,7 @@
 package com.dadaev.tea_social.dto;
 
-public record AuthorDTO(
-     String id,
+public record AuthorDto(
+     Long id,
      String username,
      String avatarUrl
 ) {}
